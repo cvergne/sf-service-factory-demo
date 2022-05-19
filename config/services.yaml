@@ -26,5 +26,16 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    App\ServiceGateway\Gateway\:
+        resource: '../src/ServiceGateway/Gateway/'
+        tags: ['service.gateway']
+        lazy: true
+
+    App\ServiceGateway\GatewayInterface:
+        class: App\ServiceGateway\GatewayInterface
+        factory: '@App\ServiceGateway\GatewayFactory'
+        arguments:
+            - !tagged_iterator { tag: 'service.gateway', default_index_method: 'getName' }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
